@@ -1,0 +1,61 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="content">
+                        <div class="row" style="margin: 0px 10px 5px 10px;border:1px solid grey;border-radius: 10px;">
+                                <div class="col-md-3">
+                                    <label for=""> From Date</label>
+                                    <div class="input-group">
+                                        <input style="border-radius:5px;height:34px;border:solid 1px lightgrey" type="date"
+                                            name="" id="" class="from-control" [(ngModel)]="startdate">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for=""> To Date</label>
+                                    <div class="input-group">
+                                        <input type="date" name="" id="" class="from-control" [(ngModel)]="todate"
+                                            style="border-radius:5px;height:34px;border:solid 1px lightgrey">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for=""> Linear&nbsp;Chart</label>
+                                    <div class="input-group">
+                                        <input type="radio" class="form-check-input" name="optradio" value=3
+                                            style="margin-left:30px" [(ngModel)]="checkboxvalue"
+                                            (change)="getreport(startdate,todate,checkboxvalue)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for=""> Table&nbsp;Wise</label>
+                                    <div class="input-group">
+                                        <input type="radio" class="form-check-input" name="optradio" value=2
+                                            style="margin-left:30px" [(ngModel)]="checkboxvalue"
+                                            (change)="getreport(startdate,todate,checkboxvalue)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <label for=""> Category</label>
+                                    <div class="input-group">
+                                        <input type="radio" class="form-check-input" name="optradio" value=1
+                                            style="margin-left:30px" [(ngModel)]="checkboxvalue"
+                                            (change)="getreport(startdate,todate,checkboxvalue)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div  *ngIf="showhide!=true">
+                                <div class="row"  style="border:1px solid grey;border-radius: 10px;margin:0px 10px 0px 10px">
+                                    <div id="chartdiv1" [style.width.%]="100" [style.height.px]="330"></div>
+                                </div>
+                                <div class="row" style="border:1px solid grey;border-radius: 10px;margin: 10px">
+                                    <div id="chartdiv2" [style.width.%]="100" [style.height.px]="330"></div>
+                                </div>
+                            </div>
+                    <div class="row" *ngIf="showhide==true" style="border:1px solid grey;border-radius: 10px;margin:0px 10px 10px 10px">
+                        <div id="chartdiv1" [style.width.%]="100" [style.height.px]="420"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+.my-custom-scrollbar {
+    height: 290px;
+  }
+
+
+  .tableBodyScroll tbody {
+    display:block;
+    max-height:230px;
+    overflow-y:scroll;
+    table-layout:fixed;
+    }
+    .tableBodyScroll thead, tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+    }
+    .tableBodyScroll1 tbody {
+      display:block;
+      max-height:380px;
+      overflow-y:scroll;
+      table-layout:fixed;
+      }
+      .tableBodyScroll1 thead, tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+      }
+
+
+.foldtl:before {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 0px;
+  height: 0px;
+  border-bottom: 35px solid #fff;
+  border-radius:5px 0px;
+  border-left: 35px solid transparent;
+  -webkit-box-shadow: 7px 7px 7px rgba(0,0,0,0.3);
+  -moz-box-shadow: 7px 7px 7px rgba(0,0,0,0.3);
+  box-shadow: 7px 7px 7px rgba(0,0,0,0.3);
+}
+.foldtl:after {
+  content: "";
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 0px;
+  height: 0px;
+  border-top: 34px solid rgb(221, 228, 221); 
+  border-right: 34px solid transparent;
+}

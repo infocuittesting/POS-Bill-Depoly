@@ -1,0 +1,17 @@
+
+
+.my-custom-scrollbar {
+    position: relative;
+    height: 430px;
+    overflow: auto;
+  }
+  .table-responsive-scroll-y {
+    display: block;
+  }
+
+ .color{
+   color: rgba(39, 247, 11, 0.952);
+ }
+ .color_one{
+  color: crimson
+ }

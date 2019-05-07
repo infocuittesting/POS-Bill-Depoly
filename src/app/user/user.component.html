@@ -1,0 +1,317 @@
+<div class="container-fluid">
+  <div class="row" *ngIf="showhide==true">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="header">
+          <div class="card-header">
+            <div class="row">
+              <div class="col-md-2">
+                <button class="btn btn-info pull-left" data-toggle="modal" data-target="#myModal"
+                  style="width:100%">Additems</button>
+              </div>
+
+              <div class="col-md-2">
+                <button class="btn btn-info" style="width:100%" (click)="testfun()">All Food Items</button>
+              </div>
+              <div class="col-md-2 text-center">
+                <label for="" style="color:#68B3C8">Offers</label>
+                <div class="form-check">
+                  <input type="checkbox" style="color:#68B3C8" class="form-check-input" name="" id=""
+                    [(ngModel)]="offersss" (change)="cehkfils(offersss)">
+                </div>
+              </div>
+              <div class="col-md-2 text-center">
+                <label for="" style="color:#68B3C8">Today&nbsp;Special</label>
+                <div class="form-check ">
+                  <input type="checkbox" style="color:#68B3C8" class="form-check-input" name="" id=""
+                    [(ngModel)]="specialss" (change)="cehkfil(specialss)">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <input class="form-control info" type="text"
+                  style="  border: 0;border-radius: 0px !important;outline: 0;background:transparent;border-bottom: 1px solid #68B3C8;color: black"
+                  name="serch" [(ngModel)]="searchdata" list="key" placeholder="enter search term here">
+                <!-- <datalist name="" id="key">
+                    <option *ngFor="let item of selectfod">{{item.food_name}}</option>
+                  </datalist> -->
+              </div>
+            </div>
+          </div>
+          <br>
+        </div>
+        <div class="table-responsive my-custom-scrollbar">
+          <table class="table table-striped table-hover">
+            <thead>
+              <tr style="color:red">
+                <th>Name</th>
+                <th>Food&nbsp;Type</th>
+                <th>Catagory</th>
+                <th>Status</th>
+                <th>Offers(in&nbsp;Rs)</th>
+                <th>Today&nbsp;Specials</th>
+                <th>Price&nbsp;in&nbsp;Rs</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="let fod of selectfod | mainfilter:{food_name:searchdata,food_type:searchdata,
+                          category:searchdata,status:searchdata,offer_value:searchdata,price:searchdata} | mainfilter:{today_special_status:specialss};">
+                <td>{{fod.food_name}}</td>
+                <td>{{fod.food_type}}</td>
+                <td>{{fod.category}}</td>
+                <td>{{fod.status}}</td>
+                <td>
+                  <div class="row">
+                    <div class="col-sm-2">
+                      <div class="" *ngIf="fod.offer_value!=0"><i class="fa fa-gift" style="color:red"></i></div>
+                    </div>
+                    {{fod.offer_value}}
+                  </div>
+                </td>
+                <td [ngClass]="{'color':fod.today_special_status=='YES','color_one':fod.today_special_status=='NO'}">
+                  {{fod.today_special_status}}</td>
+                <td><i class="fa fa-inr"></i>{{fod.price}}</td>
+                <td><i class="fa fa-pencil-square-o" data-toggle="modal" title="EDIT FOOD ITEMS" data-target="#myModal1"
+                    (click)="editfood(fod)"></i>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">ADD FOOD ITEMS</h4>
+          </div>
+          <form #frm="ngForm">
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="itemname">Item Name</label>
+                <input type="text" class="form-control" placeholder="Enter Item Name" name="itemname"
+                  [(ngModel)]="insert.fdname" required pattern="[A-Za-z]">
+              </div>
+              <div class="form-group">
+                <label for="itemcat">Item Catagory</label>
+                <select name="itemcat" [(ngModel)]="fdcats">
+                  <option *ngFor="let ngg of cat" [ngValue]="ngg.category_id">{{ngg.category}}</option>
+                </select>
+                <input class="form-control" placeholder="Enter Catagory here" name="itemcat" [(ngModel)]="fdcat1">
+              </div>
+              <div class="form-group">
+                <label for="image"> Choose Item Image</label>
+                <input type="file" accept="image/*" (change)="ActiveListener($event)" name="image" [(ngModel)]="img">
+              </div>
+              <div class="form-group">
+                <label>Item price</label>
+                <input type="text" class="form-control" placeholder="price" name="itemprice"
+                  [(ngModel)]="insert.fdprice">
+              </div>
+              <div class="form-group">
+                  <label for="foodcat">food Catagory</label>
+                  <select class="form-control" placeholder="Enter food Catagory here" list="type" name="foodcat"
+                    [(ngModel)]="fdtype">
+                    <option *ngFor="let gn of foodtype" [ngValue]="gn.food_type_id">{{gn.food_type}}</option>
+                  </select>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info"
+                (click)="Insert_food(insert,fdcats,fdcat1,fdtype,img);frm.reset()">OK</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <div class="modal fade" id="myModal1" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">EDIT FOOD ITEMS</h4>
+          </div>
+          <div class="modal-body">
+            <label>Item Name</label>
+            <input type="text" class="form-control" placeholder="Enter Item Name" name="itemname"
+              [(ngModel)]="getuser.fname">
+            <label>OFFER</label>
+            <input type="text" class="form-control" placeholder="Enter Item value" name="itemname"
+              [(ngModel)]="getuser.offer">
+            <label>Item status</label>
+            <select class="form-control" placeholder="Enter Item status" name="itemname" [(ngModel)]="status">
+              <option *ngFor="let agg of foodstatus" [ngValue]="agg.status_id">{{agg.status}}</option>
+            </select>
+            <label>Item Catagory</label>
+            <input placeholder="Enter Catagory here" class="form-control" name="itemcat" [(ngModel)]="cate">
+              
+            <!-- <input class="form-control" placeholder="Enter Catagory here" name="itemcat" [(ngModel)]="fdcat1"> -->
+            <input type="file" accept="image/*" (change)="InActiveListener($event)" name="image"
+              [(ngModel)]="img.updatefoodimg">
+            <label>Item price</label>
+            <input type="text" class="form-control" placeholder="price" name="itemprice" [(ngModel)]="getuser.fdprice">
+            <label>food Catagory</label>
+            <select class="form-control" placeholder="Enter food Catagory here" list="type" name="foodcat"
+              [(ngModel)]="fdtype">
+              <option *ngFor="let gn of foodtype" [ngValue]="gn.food_type_id">{{gn.food_type}}</option>
+            </select>
+            <input type="file" accept="image/*" (change)="UnchangeListener($event)" name="image"
+              [(ngModel)]="img.updateitemimg">
+            <label>Today Special</label>
+            <select class="form-control" placeholder="select Today Special" list="type" name="tdyspecial"
+              [(ngModel)]="tdyspecial">
+              <option *ngFor="let spec of special" [ngValue]="spec.today_special_id">{{spec.today_special_status}}
+              </option>
+            </select>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-info"
+              (click)="Update_food(getuser,fdid,cate,fdtype,status,tdyspecial,img)" data-dismiss="modal">OK</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="showhide==false">
+    <div class="card">
+      <br>
+      <div class="col-md-10">
+        <ul class="nav nav-pills" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="pill" href="#home">FOOD ITEMS</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="pill" href="#menu1"> CLOSED ITEMS</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-2">
+        <div class="ti-back-left" style="font-size:20px;color: black" title="Return to Main Menu" (click)=test()>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="tab-content">
+        <div id="home" class="container-fluid tab-pane active">
+          <br>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive my-custom-scrollbar">
+                    <table class="table table-striped table-hover">
+                      <thead>
+                        <tr style="color:red">
+                          <th>
+                            ID
+                          </th>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Category
+                          </th>
+                          <th>
+                            Close
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let value of open;let i=index;">
+                          <td>
+                            {{i+1}}
+                          </td>
+                          <td>
+                            {{value.food_name}}
+                          </td>
+                          <td>
+                            {{value.category}}
+                          </td>
+                          <td class="">
+                            <i class="fa fa-times" style="color:red;" (click)="togglebutton(value)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div id="menu1" class="container-fluid tab-pane fade">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                </div>
+                <div class="card-body">
+                  <div class="table-responsive my-custom-scrollbar">
+                    <table class="table table-striped table-hover">
+                      <thead>
+                        <tr style="color: red">
+                          <th>
+                            ID
+                          </th>
+                          <th>
+                            Name
+                          </th>
+                          <th>
+                            Catagory
+                          </th>
+                          <th>
+                            Open
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of close;let i=index">
+                          <td>
+                            {{i+1}}
+                          </td>
+                          <td>
+                            {{item.food_name}}
+                          </td>
+                          <td>
+                            {{value.category}}
+                          </td>
+                          <td class="">
+                            <i class="fa fa-plus" style="color:green" (click)="togglebutton(item)"></i>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
