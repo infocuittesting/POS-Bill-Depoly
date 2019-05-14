@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../common.service';
 import { ToastrService } from 'ngx-toastr'
+import { SessionStorageService } from "ngx-webstorage";
 
 @Component({
     selector: 'user-cmp',
@@ -12,7 +13,9 @@ import { ToastrService } from 'ngx-toastr'
 })
 
 export class UserComponent implements OnInit{
-    constructor(private user: CommonService,private toastr: ToastrService) { }
+    constructor(private user: CommonService,private toastr: ToastrService,public session: SessionStorageService) { }
+    public business_id:any;
+
     showSuccess(message) {
       this.toastr.success(message);
     }
@@ -95,9 +98,10 @@ export class UserComponent implements OnInit{
       console.log("filter",JSON.stringify(this.selectfod));
     }
     ngOnInit(){
+      this.business_id=this.session.retrieve("branch_id");
         this.Select_food();
         this.Catagory();
-        this.Enable_Food();
+
     }
     testfun(){
       this.showhide=false;
@@ -107,9 +111,22 @@ test(){
 }
 
     Select_food() {
-        this.user.Select_food().subscribe((Response: any) => {
+      let body={
+        "branch_id":this.business_id
+      }
+        this.user.Select_food(body).subscribe((Response: any) => {
           console.log("select", Response)
           this.selectfod = Response.Returnvalue;
+          this.open=[];this.close=[];
+            for(var i=0;i<this.selectfod.length;i++){
+             if(this.selectfod[i].food_status_id=="1"){
+               this.open.push(this.selectfod[i])
+               console.log(this.open)
+             }
+             else{
+               this.close.push(this.selectfod[i])
+             }
+            }
           this.reinitselectfod = this.selectfod;
         });
     
@@ -132,8 +149,7 @@ test(){
         else if (param3 === undefined && param2 != undefined) {
           this.category_id = param2.toString();
         }else{
-          // alert("sothing error")
-       this.showSuccess("sothing error");
+       this.showSuccess("somthing error");
 
         }
         if(param4===undefined){
@@ -163,26 +179,25 @@ test(){
           "food_id_url":this.insertitemimg,
           "food_type_id": param4,
           "today_special_id": 2,
-          "offer_value": 0
+          "offer_value": 0,
+          "branch_name":"adayar", 
+	        "branch_id":this.business_id
         }
         console.log(JSON.stringify(body));
         this.user.Insert_food(body).subscribe((Response: any) => {
           console.log("resp", Response)
           if (Response.ReturnCode == "RIS") {
-            // alert(Response.Return);
-            this.Select_food();
-            this.Enable_Food();
-            this.showSuccess("The Iteam is Add successfully")
+            this.showSuccess("The Iteam is Add successfully");
+            this.Select_food();           
           }
-          // this.fdcat1="";
-          // this.fdname="";
-          // this.fdprice="";
-          // this.insert="",this.fdcat="",this.fdcat1="",this.fdtype=""
         })
       }
     
       Catagory() {
-        this.user.Catagory().subscribe((Response: any) => {
+        let body={
+          "branch_id":this.business_id
+        }
+        this.user.Catagory(body).subscribe((Response: any) => {
           if (Response.ReturnCode == "RRS") {
             this.cat = Response.Returnvalue;
           }
@@ -262,19 +277,14 @@ test(){
           "food_type_id":param4,
           "today_special_id":param6,
           "offer_value":param1.offer,
+          "branch_name":"adayar",
           "category":param3
         }
         console.log("gf", body)
         this.user.Update_food(body).subscribe((Response: any) => {
           if (Response.ReturnCode == "RUS") {
-            // alert(Response.Return);
-            // this.toastr.success('Updated')
-            this.Select_food();
-            this.Enable_Food();
-            // this.updateitemimg=[];
-            // this.updatefoodimg=[];
             this.showSuccess("The Iteam and Category is Updated successfully")
-
+            this.Select_food();
           }
         });
       }
@@ -282,27 +292,6 @@ test(){
 public open:any=[];
 public close:any=[];
 public enable:any=[];
-
-      Enable_Food(){
-        this.user.Enable_Food().subscribe((Response:any)=>{
-          if(Response.ReturnCode=="RRS"){
-            this.enable=Response.Returnvalue;
-            this.open=[];this.close=[];
-            for(var i=0;i<this.enable.length;i++){
-             if(this.enable[i].food_status_id=="1"){
-               this.open.push(this.enable[i])
-               console.log(this.open)
-             }
-             else{
-               this.close.push(this.enable[i])
-             }
-            }
-     
-            console.log("close",this.close)
-          }
-     
-      });
-      }
 
 
       togglebutton(param){
@@ -318,16 +307,13 @@ public enable:any=[];
      "food_description":"",
      "food_id_url":"",
      "food_type_id":param.food_type_id,
-     "offer_value":param.offer_value
+     "branch_name":"adayar",
+     "offer_value":param.offer_value,
+     "category":param.category
    }
    this.user.Update_food(body).subscribe((Response:any)=>{
      if(Response.ReturnCode=="RUS"){
-      //  this.toastr.success('disabled');
-
-      //  alert(Response.Return);
-       this.Enable_Food();
-       this.showSuccess("The Food Iteam is updated successfully");
-
+       this.showSuccess("The Food Iteam Was Disabled");
  }
  
  });
@@ -343,18 +329,18 @@ public enable:any=[];
      "food_description":"",
      "food_id_url":"",
      "food_type_id":param.food_type_id,
-     "offer_value":param.offer_value
+     "branch_name":"adayar",
+     "offer_value":param.offer_value,
+     "category":param.category
    }
    this.user.Update_food(body).subscribe((Response:any)=>{
      if(Response.ReturnCode=="RUS"){
-      //  this.toastr.success('enabled');
-      // alert(Response.Return);
-      this.showSuccess("The Food Iteam is updated successfully");
-      
- this.Enable_Food();
+      this.showSuccess("The Food Iteam Was Enabled");
  }
  });
+
  }
+ this.Select_food();
 }
     
     

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonService } from '../common.service';
 import { AmChartsService } from "amcharts3-angular2";
 import *as moment from 'moment';
+import { SessionStorageService } from "ngx-webstorage";
 
 @Component({
   selector: 'typography-cmp',
@@ -12,20 +13,21 @@ import *as moment from 'moment';
 
 export class TypographyComponent implements OnInit {
 
-  constructor(private commonservice: CommonService, private AmCharts: AmChartsService) { }
+  constructor(private commonservice: CommonService, private AmCharts: AmChartsService,public session: SessionStorageService) { }
 
   public tablelist: any[];
+  public business_id:any;
 
   public todate = moment().format('YYYY-MM-DD');
   public startdate = moment().subtract('days', 7).format('YYYY-MM-DD');
   public checkboxvalue=3;
   ngOnInit() {
-    this.getreport(this.startdate, this.todate, this.checkboxvalue);
-
+    this.business_id=this.session.retrieve("branch_id");
+    this.getreport(this.startdate, this.todate, this.checkboxvalue,this.business_id);
   }
 
   public showhide:boolean=true;
-  getreport(startdate, todate, checkboxvalue) {
+  getreport(startdate, todate, checkboxvalue,param) {
 
     if(checkboxvalue=='1'||checkboxvalue=='2'){
       this.showhide=false;
@@ -35,7 +37,8 @@ export class TypographyComponent implements OnInit {
     let body = {
       "from_date": startdate,
       "to_date": todate,
-      "type": parseInt(checkboxvalue)
+      "type": parseInt(checkboxvalue),
+      "branch_id":param
     }
     console.log(body)
     this.commonservice.Getchartreport(body)
@@ -158,9 +161,10 @@ export class TypographyComponent implements OnInit {
             "valueField": "Count",
             "titleField": "category",
             "radius": "29%",
-            "innerRadius": "40%",
-            "labelRadius":4,
-            "marginTop":100,
+            "innerRadius": "46%",
+            "labelRadius":1,
+            "marginTop":120,
+            "marginBottom":10,
             "depth3D": 15,
             "theme": "light",
             "labelText": "[[title]]: [[value]]",

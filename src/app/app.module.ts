@@ -14,16 +14,21 @@ import { MainfilterPipe } from './mainfilter.pipe';
 import { DashboardComponent }   from './dashboard/dashboard.component';
 import { UserComponent }   from './user/user.component';
 import { TypographyComponent }   from './typography/typography.component';
+import { MenuComponent } from './rootmodule/menu.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { AmChartsModule } from "amcharts3-angular2";
-import { ToastrModule } from 'ngx-toastr'
+import { ToastrModule } from 'ngx-toastr';
+import { Ng2Webstorage } from "ngx-webstorage";
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
     UserComponent,
     TypographyComponent,
+    MenuComponent,
+    SignInComponent,
     MainfilterPipe
   ],
   imports: [
@@ -35,6 +40,7 @@ import { ToastrModule } from 'ngx-toastr'
     FooterModule,
     FixedPluginModule,
     FormsModule,
+    Ng2Webstorage,
     AmChartsModule,
     ToastrModule.forRoot({
       timeOut: 4000,

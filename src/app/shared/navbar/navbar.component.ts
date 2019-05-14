@@ -3,6 +3,8 @@ import { ROUTES } from '../../sidebar/sidebar.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { CommonService } from '../../common.service';
+import { SessionStorageService } from "ngx-webstorage";
+
 
 @Component({
     moduleId: module.id,
@@ -21,14 +23,16 @@ export class NavbarComponent implements OnInit{
 
     @ViewChild("navbar-cmp") button;
 
-    constructor(private commonservice: CommonService,location:Location, private renderer : Renderer, private element : ElementRef, private router: Router) {
+    constructor(private commonservice: CommonService,location:Location, private renderer : Renderer,public session: SessionStorageService, private element : ElementRef, private router: Router) {
         this.location = location;
         this.nativeElement = element.nativeElement;
         this.sidebarVisible = false;
     }
     public timeinterval:any;
+    public business_id:any;
 public ac:any;uc :any;pc:any;
     ngOnInit(){
+        this.business_id=this.session.retrieve("branch_id");
         this.listTitles = ROUTES.filter(listTitle => listTitle);
         var navbar : HTMLElement = this.element.nativeElement;
         this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
@@ -42,7 +46,10 @@ public ac:any;uc :any;pc:any;
       }
      
       Table_Status(){
-        this.commonservice.Table_Status().subscribe((Response:any)=>{
+        let body={
+            "branch_id":this.business_id
+        }
+        this.commonservice.Table_Status(body).subscribe((Response:any)=>{
             this.ac=Response.Available_count;
             this.uc=Response.unavailable_count;
             this.pc=Response.payment_count;

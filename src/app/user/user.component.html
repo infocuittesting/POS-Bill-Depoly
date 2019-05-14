@@ -31,9 +31,6 @@
                 <input class="form-control info" type="text"
                   style="  border: 0;border-radius: 0px !important;outline: 0;background:transparent;border-bottom: 1px solid #68B3C8;color: black"
                   name="serch" [(ngModel)]="searchdata" list="key" placeholder="enter search term here">
-                <!-- <datalist name="" id="key">
-                    <option *ngFor="let item of selectfod">{{item.food_name}}</option>
-                  </datalist> -->
               </div>
             </div>
           </div>
@@ -198,7 +195,7 @@
   <div class="row" *ngIf="showhide==false">
     <div class="card">
       <br>
-      <div class="col-md-10">
+      <div class="col-md-6">
         <ul class="nav nav-pills" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" data-toggle="pill" href="#home">FOOD ITEMS</a>
@@ -208,8 +205,13 @@
           </li>
         </ul>
       </div>
-      <div class="col-md-2">
-        <div class="ti-back-left" style="font-size:20px;color: black" title="Return to Main Menu" (click)=test()>
+      <div class="col-md-4">
+        <input class="form-control info" type="text"
+          style="  border: 0;border-radius: 0px !important;outline: 0;background:transparent;border-bottom: 1px solid #68B3C8;color: black"
+          name="serch" [(ngModel)]="searchdata" list="key" placeholder="enter search term here">
+      </div>
+      <div class="col-md-1">
+        <div class="ti-back-left" style="font-size:20px;color: black;padding-top: 10px" title="Return to Main Menu" (click)=test()>
         </div>
       </div>
       <br>
@@ -240,7 +242,13 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let value of open;let i=index;">
+                        <tr *ngIf="open.length==0">
+                          <td>No Items</td>
+                          <td>No Items</td>
+                          <td>No Items</td>
+                          <td>No Items</td>
+                        </tr>
+                        <tr *ngFor="let value of open | mainfilter:{food_name:searchdata,category:searchdata};let i=index;">
                           <td>
                             {{i+1}}
                           </td>
@@ -289,7 +297,13 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr *ngFor="let item of close;let i=index">
+                        <tr *ngIf="close.length==0">
+                          <td>No Items</td>
+                          <td>No Items</td>
+                          <td>No Items</td>
+                          <td>No Items</td>
+                        </tr>
+                        <tr *ngFor="let item of close | mainfilter:{food_name:searchdata,category:searchdata};let i=index">
                           <td>
                             {{i+1}}
                           </td>
@@ -297,7 +311,7 @@
                             {{item.food_name}}
                           </td>
                           <td>
-                            {{value.category}}
+                            {{item.category}}
                           </td>
                           <td class="">
                             <i class="fa fa-plus" style="color:green" (click)="togglebutton(item)"></i>

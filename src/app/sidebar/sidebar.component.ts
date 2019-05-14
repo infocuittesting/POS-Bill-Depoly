@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SessionStorageService } from "ngx-webstorage";
 
 declare var $:any;
 
@@ -22,9 +23,16 @@ export const ROUTES: RouteInfo[] = [
 })
 
 export class SidebarComponent implements OnInit {
+  constructor(public session: SessionStorageService) { }
+
+    public hotelname:any;
+    public restaurant_logo:any;
     public menuItems: any[];
     ngOnInit() {
+        this.hotelname=this.session.retrieve("restaurant_name");
+        this.restaurant_logo=this.session.retrieve("logoimages");
         this.menuItems = ROUTES.filter(menuItem => menuItem);
+
     }
     isNotMobileMenu(){
         if($(window).width() > 991){
@@ -32,5 +40,5 @@ export class SidebarComponent implements OnInit {
         }
         return true;
     }
-
+    
 }
