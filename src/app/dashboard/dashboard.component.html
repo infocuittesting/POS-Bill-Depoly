@@ -29,8 +29,9 @@
                                 </div>
                             </div>
                             <div class="row" *ngIf="item.table_status_id == 2">
-                                <div class="col-md-6 text-center"><b><span class="fa fa-clock-o"></span>{{item.order_time | date:'h:mm&nbsp;a'}}</b>
-                                        </div>
+                                <div class="col-md-6 text-center"><b><span
+                                            class="fa fa-clock-o"></span>{{item.order_time | date:'h:mm&nbsp;a'}}</b>
+                                </div>
                                 <div class="col-md-6 text-center">
                                     <b style="color:rgb(250, 165, 8)" (click)="getoccupied(item)">Occupied</b>
                                 </div>
@@ -66,134 +67,144 @@
                             </div>
                         </div>
                         <!-- <div class="footer"> -->
-                            <hr />
-                            <div class="stats">
-                                <div class="row" *ngIf="item.table_status_id == 3">
-                                    <div class="col-md-6 text-center">
-                                        <b style="color:rgb(14, 48, 20)">{{item.payment_type}}</b>
-                                    </div>
-                                    <div class="col-md-6 text-center">
-                                        <b style="color:red" (click)="getbill(item)">View&nbsp;Bill</b>
-                                    </div>
-                                    <!-- <div class="col-md-5">
+                        <hr />
+                        <div class="stats">
+                            <div class="row" *ngIf="item.table_status_id == 3">
+                                <div class="col-md-6 text-center">
+                                    <b style="color:rgb(14, 48, 20)">{{item.payment_type}}</b>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                    <b style="color:red" (click)="getbill(item)">View&nbsp;Bill</b>
+                                </div>
+                                <!-- <div class="col-md-5">
                                         <a style="color:rgb(27, 125, 223)" (click)="closebill(item)">Complete</a>
                                     </div> -->
-                                </div>
-                                <div class="row" *ngIf="item.table_status_id== 2">
-                                    <!-- <div class="col-md-4"></div> -->
-                                    <div class="col-md-6 text-center"><i
-                                            class="fa fa-clock-o ">{{item.order_time | date:'h:mm&nbsp;a'}}</i></div>
-                                    <div class="col-md-6 text-center">
-                                        <b style="color:rgb(250, 165, 8)"  (click)="getoccupied(item)">Occupied</b>
-                                    </div>
-                                </div>
-                                <div class="row" *ngIf="item.table_status_id== 1">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4 text-center">
-                                            <b style="color:rgb(27, 125, 223)">Vaccant</b>
-                                        </div>
-                                    <div class="col-md-4"></div>
+                            </div>
+                            <div class="row" *ngIf="item.table_status_id== 2">
+                                <!-- <div class="col-md-4"></div> -->
+                                <div class="col-md-6 text-center"><i
+                                        class="fa fa-clock-o ">{{item.order_time | date:'h:mm&nbsp;a'}}</i></div>
+                                <div class="col-md-6 text-center">
+                                    <b style="color:rgb(250, 165, 8)" (click)="getoccupied(item)">Occupied</b>
                                 </div>
                             </div>
+                            <div class="row" *ngIf="item.table_status_id== 1">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-4 text-center">
+                                    <b style="color:rgb(27, 125, 223)">Vaccant</b>
+                                </div>
+                                <div class="col-md-4"></div>
+                            </div>
+                        </div>
                         <!-- </div> -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-lg-4 ">
+        <div class="col-lg-4 " >
             <div class="row">
                 <div class="">
                     <div class="card" *ngIf="showhide1==true">
-                        <div class="header">
-                            <h4 class="title" style="color:red;text-align: center"> TABLE NO : {{tablevalue.table_no}}
-                            </h4>
-                        </div>
+                        <!-- <div class="header">
+                         
+                        </div> -->
                         <div class="content">
-                            <div class="table-responsive ">
-                                <table class="table table-striped tableBodyScroll">
-                                    <thead>
-                                        <tr style="color:red">
-                                            <th style="width:200px">Items&nbsp;list</th>
-                                            <th style="width:50px">QTY</th>
-                                            <th>Price</th>
-                                        </tr>
+                            <div class="printclass" >
+                                    <h4 class="title" style="color:red;text-align: center"> TABLE NO : {{tablevalue.table_no}}
+                                        </h4>
+                                        <hr/>
+                                <div class="table-responsive ">
+                                    <table class="table table-striped tableBodyScroll" style="width:100%">
+                                        <thead>
+                                            <tr style="color:red">
+                                                <th align="left" style="width:50%">Items&nbsp;list</th>
+                                                <th align="left" style="width:25%" >QTY</th>
+                                                <th align="left" style="width:25%">Price</th>
+                                            </tr>
 
-                                    </thead>
-                                    <tbody>
-                                        <tr *ngFor="let item of billtable">
-                                            <td style="width:200px">{{item.food_name}}</td>
-                                            <td style="width:50px"><i class="fa fa-times"></i>{{item.quantity}}</td>
-                                            <td><i class="fa fa-inr"></i> {{item.total_price}}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <a style="color:red"> Total Amount (of Item) :</a>
-                                </div>
-                                <div class="col-md-4">
-                                    <p style="color:red"><i class="fa fa-inr"></i> {{tablevalue.sub_total}}</p>
-                                </div>
-                                <div class="col-md-8">
-                                    <a style="color:red"> Total CGST (6%) :</a>
-                                </div>
-                                <div class="col-md-4">
-                                    <p style="color:red"><i class="fa fa-inr"></i> {{tablevalue.CGST_Amount}}</p>
-                                </div>
-                                <div class="col-md-8">
-                                    <a style="color:red"> Total SGST (6%) :</a>
-                                </div>
-                                <div class="col-md-4">
-                                    <p style="color:red"><i class="fa fa-inr"></i> {{tablevalue.CGST_Amount}}</p>
-                                </div>
-                            </div>
-                            <hr />
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <a style="color:red"> Total Price :</a>
-                                </div>
-                                <div class="col-md-4">
-                                    <p style="color:red"><i class="fa fa-inr"></i> {{tablevalue.grand_total}}</p>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let item of billtable">
+                                                <td style="margin-left:0px;width:50%">{{item.food_name}}</td>
+                                                <td  style="width:25%;"  ><i class="fa fa-times"></i>{{item.quantity}}</td>
+                                                <td  style="width:25%"><i class="fa fa-inr"></i> {{item.total_price}}</td>
+                                            </tr>
+                                            <tr border=1>
+                                                <td colspan="2" style="color:red;"> Total Amount (of Item)
+                                                    :
+                                                </td>
+                                                <td style="color:red;"><i class="fa fa-inr"></i>
+                                                    {{tablevalue.sub_total}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="color:red;"> Total CGST (2.80%) :
+                                                </td>
+                                                <td style="color:red;"><i class="fa fa-inr"></i>
+                                                    {{tablevalue.CGST_Amount}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="2" style="color:red;"> Total SGST (6%) :
+                                                </td>
+                                                <td style="color:red;"><i class="fa fa-inr"></i>
+                                                    {{tablevalue.CGST_Amount}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>         
+                                <hr />
+                                <div class="row">
+                                    <a style="color:red;"> Total Price :</a>
+                                    <p style="color:red; float:right;margin-right: 40px"><i class="fa fa-inr"></i>
+                                        {{tablevalue.grand_total}}</p>
+
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-12">
-                                        <button class="btn btn-info" style="color:rgb(27, 125, 223);width:100%" (click)="closebill(tablevalue)">Complete Bill</button>
+                                <div class="col-md-6">
+                                    <button class="btn btn-info" style="color:rgb(27, 125, 223);width:100%"
+                                        (click)="closebill(tablevalue)">Complete Bill</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <button class="btn btn-info" style="color:rgb(27, 125, 223);width:100%"
+                                        (click)="printbill('printclass')">Print Bill</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="card" *ngIf="showhide2==true">
                         <div class="header">
-                            <h4 class="title" style="color:red;text-align: center"> TABLE NO : {{getoccvalue[0].table_no}}
+                            <h4 class="title" style="color:red;text-align: center"> TABLE NO :
+                                {{getoccvalue[0].table_no}}
                             </h4>
                         </div>
-                        <div class="content" >
+                        <div class="content">
                             <div class="table-responsive ">
                                 <table class="table table-striped tableBodyScroll1">
                                     <thead>
                                         <tr style="color:red">
                                             <th style="width:180px">Items&nbsp;Name</th>
-                                            <th >Order</th>
-                                            <th >Status</th>
+                                            <th>Order</th>
+                                            <th>Status</th>
                                         </tr>
 
                                     </thead>
                                     <tbody>
                                         <tr *ngFor="let item of getoccvalue">
                                             <td style="width:180px">{{item.food_name}}</td>
-                                            <td  *ngIf="item.order_status_desc == 'COMPLETED'">Cooked</td>
-                                            <td  *ngIf="item.order_status_desc == 'ORDER'">Not Cooked</td>
-                                            <td  *ngIf="item.notification_status == 'READ'">Served</td>
-                                            <td  *ngIf="item.notification_status == 'NOPE'||item.notification_status == 'UN READ'">Not Served</td>
+                                            <td *ngIf="item.order_status_desc == 'COMPLETED'">Cooked</td>
+                                            <td *ngIf="item.order_status_desc == 'ORDER'">Not Cooked</td>
+                                            <td *ngIf="item.notification_status == 'READ'">Served</td>
+                                            <td
+                                                *ngIf="item.notification_status == 'NOPE'||item.notification_status == 'UN READ'">
+                                                Not Served</td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <div class="row">
                                     <div class="col-md-12">
-                                    <button style="width:100%" class="btn btn-info" (click)="closeoccupied()">Close</button>
+                                        <button style="width:100%" class="btn btn-info"
+                                            (click)="closeoccupied()">Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -203,4 +214,4 @@
             </div>
         </div>
     </div>
-</div>    
+</div>

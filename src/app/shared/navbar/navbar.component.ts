@@ -42,7 +42,7 @@ public ac:any;uc :any;pc:any;
        this.Table_Status();
        this.timeinterval=setInterval(() => {
         this.Table_Status(); 
-      }, 2000); 
+      }, 30000); 
       }
      
       Table_Status(){
@@ -91,4 +91,20 @@ public ac:any;uc :any;pc:any;
           this.sidebarVisible = false;
           body.classList.remove('nav-open');
       };
+
+      btnClick(){
+        let body = {
+          "branch_id":this.session.retrieve("branch_id"),
+          "screen":"BILLING",
+          "login_status_id":2,
+          "mobile":this.session.retrieve("mobile") ,
+          "password":this.session.retrieve("password")
+        }
+        this.commonservice.login(body).subscribe((Response:any)=>{
+          console.log("theeeee",Response)
+          if(Response.ReturnCode=='LOS'){
+            this.router.navigate(['sign-in']);
+          }
+        });  
+        }
 }

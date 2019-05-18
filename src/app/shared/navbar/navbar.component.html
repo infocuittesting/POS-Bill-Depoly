@@ -9,7 +9,7 @@
             </button>
             <a class="navbar-brand" href="#">{{getTitle()}}</a>
         </div>
-        <a class="navbar-brand" style="float:right"><i class="fa fa-power-off " title="Log Out"></i> </a>
+        <a class="navbar-brand" style="float:right" (click)="btnClick()"><i class="fa fa-power-off " title="Log Out"></i> </a>
         <a class="navbar-brand" style="float:right"><i class="fa fa-credit-card-alt" title="Ready for Payment"></i><span class="badge badge-success" style="margin-left:3px;background-color: #28a745;">{{pc}}</span> </a>
         <a class="navbar-brand" style="float:right"><i class="fas fa-chair" title="Table Vacant"></i><span class="badge badge-warning" style="background-color:#dc3545;">{{ac}}</span></a>
         <a class="navbar-brand" style="float:right"><i class="fas fa-user-check" title="Table Occupied"></i ><span class="badge badge-info" style="background-color:#007bff;">{{uc}}</span></a>

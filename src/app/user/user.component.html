@@ -166,7 +166,7 @@
               
             <!-- <input class="form-control" placeholder="Enter Catagory here" name="itemcat" [(ngModel)]="fdcat1"> -->
             <input type="file" accept="image/*" (change)="InActiveListener($event)" name="image"
-              [(ngModel)]="img.updatefoodimg">
+              [(ngModel)]="img">
             <label>Item price</label>
             <input type="text" class="form-control" placeholder="price" name="itemprice" [(ngModel)]="getuser.fdprice">
             <label>food Catagory</label>
@@ -175,7 +175,7 @@
               <option *ngFor="let gn of foodtype" [ngValue]="gn.food_type_id">{{gn.food_type}}</option>
             </select>
             <input type="file" accept="image/*" (change)="UnchangeListener($event)" name="image"
-              [(ngModel)]="img.updateitemimg">
+              [(ngModel)]="img">
             <label>Today Special</label>
             <select class="form-control" placeholder="select Today Special" list="type" name="tdyspecial"
               [(ngModel)]="tdyspecial">

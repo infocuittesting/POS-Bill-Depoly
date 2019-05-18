@@ -33,13 +33,14 @@ export class DashboardComponent implements OnInit {
     public showhide1: boolean = false;
     public showhide2: boolean = false;
     public timeinterval: any;
-
+    public pic :any;
     ngOnInit() {
         this.business_id = this.session.retrieve("branch_id");
+        this.pic=this.session.retrieve("logoimages");
         this.getcard();
         this.timeinterval = setInterval(() => {
             this.getcard();
-        }, 2000);
+        }, 30000);
     }
 
     getcard() {
@@ -85,7 +86,16 @@ export class DashboardComponent implements OnInit {
         clearInterval(this.occupied);
     }
 
-    closebill(param) {
+    printbill(cmpName){
+        let printContents = document.getElementsByClassName(cmpName)[0].innerHTML;
+        var printWin = window.open();
+        printWin.document.write(printContents);
+        printWin.document.close();
+        printWin.focus();
+        printWin.print();
+        printWin.close();
+    }
+    closebill(param) { 
         let body = {
             "table_no": param.table_no,
             "order_no": param.order_no,
@@ -103,8 +113,9 @@ export class DashboardComponent implements OnInit {
             .subscribe((resp: any) => {
                 console.log("tesssss", resp)
                 if (resp.ReturnCode == "RUS") {
+                    this.showhide=true;
                     this.showSuccess("The Bill for Table Number " + param.table_no);
-
+                    this.getcard();
                 }
             });
 
