@@ -28,52 +28,52 @@
                 </div>
               </div>
               <div class="col-md-4">
-                <input class="form-control info" type="text"
+                <input class="form-control info sigleborder" type="text"
                   style="  border: 0;border-radius: 0px !important;outline: 0;background:transparent;border-bottom: 1px solid #68B3C8;color: black"
                   name="serch" [(ngModel)]="searchdata" list="key" placeholder="enter search term here">
               </div>
             </div>
           </div>
           <br>
-        </div>
-        <div class="table-responsive my-custom-scrollbar">
-          <table class="table table-striped table-hover">
-            <thead>
-              <tr style="color:red">
-                <th>Name</th>
-                <th>Food&nbsp;Type</th>
-                <th>Catagory</th>
-                <th>Status</th>
-                <th>Offers(in&nbsp;Rs)</th>
-                <th>Today&nbsp;Specials</th>
-                <th>Price&nbsp;in&nbsp;Rs</th>
-                <th>Edit</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                *ngFor="let fod of selectfod | mainfilter:{food_name:searchdata,food_type:searchdata,
-                          category:searchdata,status:searchdata,offer_value:searchdata,price:searchdata} | mainfilter:{today_special_status:specialss};">
-                <td>{{fod.food_name}}</td>
-                <td>{{fod.food_type}}</td>
-                <td>{{fod.category}}</td>
-                <td>{{fod.status}}</td>
-                <td>
-                  <div class="row">
-                    <div class="col-sm-2">
-                      <div class="" *ngIf="fod.offer_value!=0"><i class="fa fa-gift" style="color:red"></i></div>
+          <div class="table-responsive my-custom-scrollbar">
+            <table class="table table-striped table-hover table-bordered">
+              <thead>
+                <tr style="background-color:#68B3C8;color:white">
+                  <th>Name</th>
+                  <th>Food&nbsp;Type</th>
+                  <th>Catagory</th>
+                  <th>Status</th>
+                  <th>Offers(in&nbsp;Rs)</th>
+                  <th>Today&nbsp;Specials</th>
+                  <th>Price&nbsp;in&nbsp;Rs</th>
+                  <th>Edit</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let fod of selectfod | mainfilter:{food_name:searchdata,food_type:searchdata,
+                            category:searchdata,status:searchdata,offer_value:searchdata,price:searchdata} | mainfilter:{today_special_status:specialss};">
+                  <td>{{fod.food_name}}</td>
+                  <td>{{fod.food_type}}</td>
+                  <td>{{fod.category}}</td>
+                  <td>{{fod.status}}</td>
+                  <td>
+                    <div class="row">
+                      <div class="col-sm-2">
+                        <div class="" *ngIf="fod.offer_value!=0"><i class="fa fa-gift" style="color:red"></i></div>
+                      </div>
+                      {{fod.offer_value}}
                     </div>
-                    {{fod.offer_value}}
-                  </div>
-                </td>
-                <td [ngClass]="{'color':fod.today_special_status=='YES','color_one':fod.today_special_status=='NO'}">
-                  {{fod.today_special_status}}</td>
-                <td><i class="fa fa-inr"></i>{{fod.price}}</td>
-                <td><i class="fa fa-pencil-square-o" data-toggle="modal" title="EDIT FOOD ITEMS" data-target="#myModal1"
-                    (click)="editfood(fod)"></i>
-              </tr>
-            </tbody>
-          </table>
+                  </td>
+                  <td [ngClass]="{'color':fod.today_special_status=='YES','color_one':fod.today_special_status=='NO'}">
+                    {{fod.today_special_status}}</td>
+                  <td><i class="fa fa-inr"></i>{{fod.price}}</td>
+                  <td><i class="fa fa-pencil-square-o" data-toggle="modal" title="EDIT FOOD ITEMS"
+                      data-target="#myModal1" (click)="editfood(fod)"></i>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
@@ -98,40 +98,50 @@
           </div>
           <form #frm="ngForm">
             <div class="modal-body">
-              <div class="form-group">
-                <label for="itemname">Item Name</label>
-                <input type="text" class="form-control" placeholder="Enter Item Name" name="itemname"
-                  [(ngModel)]="insert.fdname" required pattern="[A-Za-z]">
-              </div>
-              <div class="form-group">
-                <label for="itemcat">Item Catagory</label>
-                <select name="itemcat" [(ngModel)]="fdcats">
-                  <option *ngFor="let ngg of cat" [ngValue]="ngg.category_id">{{ngg.category}}</option>
-                </select>
-                <input class="form-control" placeholder="Enter Catagory here" name="itemcat" [(ngModel)]="fdcat1">
-              </div>
-              <div class="form-group">
-                <label for="image"> Choose Item Image</label>
-                <input type="file" accept="image/*" (change)="ActiveListener($event)" name="image" [(ngModel)]="img">
-              </div>
-              <div class="form-group">
-                <label>Item price</label>
-                <input type="text" class="form-control" placeholder="price" name="itemprice"
-                  [(ngModel)]="insert.fdprice">
-              </div>
-              <div class="form-group">
-                  <label for="foodcat">food Catagory</label>
-                  <select class="form-control" placeholder="Enter food Catagory here" list="type" name="foodcat"
-                    [(ngModel)]="fdtype">
-                    <option *ngFor="let gn of foodtype" [ngValue]="gn.food_type_id">{{gn.food_type}}</option>
-                  </select>
+              <div class="card" style="border:1px solid lightgrey">
+                <div class="card-body">
+                  <div class="row" style="margin: 10px;">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="itemname">Item Name</label>
+                        <input type="text" class="form-control" placeholder="Enter Item Name" name="itemname"
+                          [(ngModel)]="insert.fdname" required pattern="[A-Za-z]">
+                      </div>
+                      <div class="form-group">
+                        <label for="itemcat">Item Catagory</label>
+                        <select name="itemcat" [(ngModel)]="fdcats" style="height:34px">
+                          <option *ngFor="let ngg of cat" [ngValue]="ngg.category_id">{{ngg.category}}</option>
+                        </select>
+                        <input class="form-control" placeholder="Enter Catagory here" name="itemcat"
+                          [(ngModel)]="fdcat1">
+                      </div>
+                      <div class="form-group">
+                        <label for="image"> Choose Item Image</label>
+                        <input type="file" accept="image/*" (change)="ActiveListener($event)" name="image"
+                          [(ngModel)]="img">
+                      </div>
+                      <div class="form-group">
+                        <label>Item price</label>
+                        <input type="text" class="form-control" placeholder="price" name="itemprice"
+                          [(ngModel)]="insert.fdprice">
+                      </div>
+                      <div class="form-group">
+                        <label for="foodcat">food Catagory</label>
+                        <select class="form-control" placeholder="Enter food Catagory here" list="type" name="foodcat"
+                          [(ngModel)]="fdtype">
+                          <option *ngFor="let gn of foodtype" [ngValue]="gn.food_type_id">{{gn.food_type}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-info"
-                (click)="Insert_food(insert,fdcats,fdcat1,fdtype,img);frm.reset()">OK</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-            </div>
+                <button type="button" class="btn btn-info"
+                  (click)="Insert_food(insert,fdcats,fdcat1,fdtype,img);frm.reset()" data-dismiss="modal">OK</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
           </form>
         </div>
       </div>
@@ -151,37 +161,43 @@
             <h4 class="modal-title">EDIT FOOD ITEMS</h4>
           </div>
           <div class="modal-body">
-            <label>Item Name</label>
-            <input type="text" class="form-control" placeholder="Enter Item Name" name="itemname"
-              [(ngModel)]="getuser.fname">
-            <label>OFFER</label>
-            <input type="text" class="form-control" placeholder="Enter Item value" name="itemname"
-              [(ngModel)]="getuser.offer">
-            <label>Item status</label>
-            <select class="form-control" placeholder="Enter Item status" name="itemname" [(ngModel)]="status">
-              <option *ngFor="let agg of foodstatus" [ngValue]="agg.status_id">{{agg.status}}</option>
-            </select>
-            <label>Item Catagory</label>
-            <input placeholder="Enter Catagory here" class="form-control" name="itemcat" [(ngModel)]="cate">
-              
-            <!-- <input class="form-control" placeholder="Enter Catagory here" name="itemcat" [(ngModel)]="fdcat1"> -->
-            <input type="file" accept="image/*" (change)="InActiveListener($event)" name="image"
-              [(ngModel)]="img">
-            <label>Item price</label>
-            <input type="text" class="form-control" placeholder="price" name="itemprice" [(ngModel)]="getuser.fdprice">
-            <label>food Catagory</label>
-            <select class="form-control" placeholder="Enter food Catagory here" list="type" name="foodcat"
-              [(ngModel)]="fdtype">
-              <option *ngFor="let gn of foodtype" [ngValue]="gn.food_type_id">{{gn.food_type}}</option>
-            </select>
-            <input type="file" accept="image/*" (change)="UnchangeListener($event)" name="image"
-              [(ngModel)]="img">
-            <label>Today Special</label>
-            <select class="form-control" placeholder="select Today Special" list="type" name="tdyspecial"
-              [(ngModel)]="tdyspecial">
-              <option *ngFor="let spec of special" [ngValue]="spec.today_special_id">{{spec.today_special_status}}
-              </option>
-            </select>
+            <div class="card" style="border: 1px solid lightgrey;">
+              <div class="card-body">
+                <div class="row" style="margin: 10px">
+                  <div class="col-md-12">
+                      <label>Item Name</label>
+                      <input type="text" class="form-control" placeholder="Enter Item Name" name="itemname"
+                        [(ngModel)]="getuser.fname">
+                      <label>OFFER</label>
+                      <input type="text" class="form-control" placeholder="Enter Item value" name="itemname"
+                        [(ngModel)]="getuser.offer">
+                      <label>Item status</label>
+                      <select class="form-control" placeholder="Enter Item status" name="itemname" [(ngModel)]="status">
+                        <option *ngFor="let agg of foodstatus" [ngValue]="agg.status_id">{{agg.status}}</option>
+                      </select>
+                      <label>Item Catagory</label>
+                      <input placeholder="Enter Catagory here" class="form-control" name="itemcat" [(ngModel)]="cate">
+          
+                      <!-- <input class="form-control" placeholder="Enter Catagory here" name="itemcat" [(ngModel)]="fdcat1"> -->
+                      <input type="file" accept="image/*" (change)="InActiveListener($event)" name="image" [(ngModel)]="img">
+                      <label>Item price</label>
+                      <input type="text" class="form-control" placeholder="price" name="itemprice" [(ngModel)]="getuser.fdprice">
+                      <label>food Catagory</label>
+                      <select class="form-control" placeholder="Enter food Catagory here" list="type" name="foodcat"
+                        [(ngModel)]="fdtype">
+                        <option *ngFor="let gn of foodtype" [ngValue]="gn.food_type_id">{{gn.food_type}}</option>
+                      </select>
+                      <input type="file" accept="image/*" (change)="UnchangeListener($event)" name="image" [(ngModel)]="img">
+                      <label>Today Special</label>
+                      <select class="form-control" placeholder="select Today Special" list="type" name="tdyspecial"
+                        [(ngModel)]="tdyspecial">
+                        <option *ngFor="let spec of special" [ngValue]="spec.today_special_id">{{spec.today_special_status}}
+                        </option>
+                      </select>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-info"
@@ -211,7 +227,8 @@
           name="serch" [(ngModel)]="searchdata" list="key" placeholder="enter search term here">
       </div>
       <div class="col-md-1">
-        <div class="ti-back-left" style="font-size:20px;color: black;padding-top: 10px" title="Return to Main Menu" (click)=test()>
+        <div class="ti-back-left" style="font-size:20px;color: black;padding-top: 10px" title="Return to Main Menu"
+          (click)=test()>
         </div>
       </div>
       <br>
@@ -224,9 +241,9 @@
               <div class="card">
                 <div class="card-body">
                   <div class="table-responsive my-custom-scrollbar">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover table-bordered">
                       <thead>
-                        <tr style="color:red">
+                        <tr style="background-color:#68B3C8;color: white">
                           <th>
                             ID
                           </th>
@@ -248,7 +265,8 @@
                           <td>No Items</td>
                           <td>No Items</td>
                         </tr>
-                        <tr *ngFor="let value of open | mainfilter:{food_name:searchdata,category:searchdata};let i=index;">
+                        <tr
+                          *ngFor="let value of open | mainfilter:{food_name:searchdata,category:searchdata};let i=index;">
                           <td>
                             {{i+1}}
                           </td>
@@ -279,9 +297,9 @@
                 </div>
                 <div class="card-body">
                   <div class="table-responsive my-custom-scrollbar">
-                    <table class="table table-striped table-hover">
+                    <table class="table table-striped table-hover table-bordered">
                       <thead>
-                        <tr style="color: red">
+                        <tr style="background-color:#68B3C8;color: white">
                           <th>
                             ID
                           </th>
@@ -303,7 +321,8 @@
                           <td>No Items</td>
                           <td>No Items</td>
                         </tr>
-                        <tr *ngFor="let item of close | mainfilter:{food_name:searchdata,category:searchdata};let i=index">
+                        <tr
+                          *ngFor="let item of close | mainfilter:{food_name:searchdata,category:searchdata};let i=index">
                           <td>
                             {{i+1}}
                           </td>

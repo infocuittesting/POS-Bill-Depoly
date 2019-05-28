@@ -12,7 +12,18 @@ export class CommonService {
     return this.http.post('https://tos-production.herokuapp.com/Query_Table_Status',body,options)
       .map(this.extractData)
   }
-
+  Gettablestatus(body) {
+    const headers = new Headers({ 'Content-Type': 'application/json' })
+    const options = new RequestOptions({ headers: headers });
+    return this.http.post('https://tos-production.herokuapp.com/Get_TableStatus_Flag',body,options)
+      .map(this.extractData)
+  }
+  Gettableupdate(body) {
+    const headers = new Headers({ 'Content-Type': 'application/json' })
+    const options = new RequestOptions({ headers: headers });
+    return this.http.post('https://tos-production.herokuapp.com/Update_TableStatus_Flag',body,options)
+      .map(this.extractData)
+  }
 
   bill(param) {
     let body={
@@ -41,13 +52,6 @@ export class CommonService {
       const options = new RequestOptions({ headers: headers });
     return this.http.post('https://tos-production.herokuapp.com/Update_Table_Available_Status',param,options)
       .map(this.extractData)
-  }
-
-  Table_Status(param){
-    const headers = new Headers({ 'Content-Type': 'application/json' })
-    const options = new RequestOptions({ headers: headers });
-    return this.http.post("https://tos-production.herokuapp.com/Query_Table_Status",param,options)
-    .map(this.extractData)
   }
 
   //Report 

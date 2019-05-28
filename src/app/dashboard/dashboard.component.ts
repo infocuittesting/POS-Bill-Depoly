@@ -37,20 +37,40 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         this.business_id = this.session.retrieve("branch_id");
         this.pic=this.session.retrieve("logoimages");
-        this.getcard();
+        let body = {
+            "branch_id": this.business_id
+        }
+        this.commonservice.Gettable(body)
+        .subscribe((resp1: any) => {
+                this.tablelist = resp1.Returnvalue;
+                console.log("testttttt", resp1)             
+        });
         this.timeinterval = setInterval(() => {
             this.getcard();
-        }, 30000);
+        }, 5000);
     }
 
     getcard() {
         let body = {
             "branch_id": this.business_id
         }
-        this.commonservice.Gettable(body)
+                
+        this.commonservice.Gettablestatus(body)
             .subscribe((resp: any) => {
-                this.tablelist = resp.Returnvalue;
-                console.log("testttttt", resp)
+                console.log("tablestatus", resp) 
+             if(resp.Changes_Flage=="1"){                
+                this.commonservice.Gettable(body)
+                .subscribe((resp1: any) => {
+                    if(resp1.ReturnCode=="RRS"){
+                        this.tablelist = resp1.Returnvalue;
+                        console.log("testttttt", resp1) 
+                        this.commonservice.Gettableupdate(body)
+                        .subscribe((resp2: any) => {
+                        resp;                          
+                        });
+                    }
+                });
+             }   
             });
     }
     getbill(param) {
@@ -67,6 +87,7 @@ export class DashboardComponent implements OnInit {
 
     public getoccvalue: any;
     public occupied: any;
+    public getoccvaluetableno:any;
     getoccupied(param) {
         this.showhide = false;
         this.showhide1 = false;
@@ -75,6 +96,7 @@ export class DashboardComponent implements OnInit {
             .subscribe((resp: any) => {
                 console.log("testtttttt occbill", resp)
                 this.getoccvalue = resp.Returnvalue;
+                this.getoccvaluetableno=param.table_no;
             });
         this.occupied = setInterval(() => {
             this.getcard();

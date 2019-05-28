@@ -175,7 +175,7 @@
                     <div class="card" *ngIf="showhide2==true">
                         <div class="header">
                             <h4 class="title" style="color:red;text-align: center"> TABLE NO :
-                                {{getoccvalue[0].table_no}}
+                                {{getoccvaluetableno}}
                             </h4>
                         </div>
                         <div class="content">
@@ -198,6 +198,9 @@
                                             <td
                                                 *ngIf="item.notification_status == 'NOPE'||item.notification_status == 'UN READ'">
                                                 Not Served</td>
+                                        </tr>
+                                        <tr *ngIf="getoccvalue == 0">
+                                          <td> No Data Found</td>
                                         </tr>
                                     </tbody>
                                 </table>

@@ -15,3 +15,6 @@
  .color_one{
   color: crimson
  }
+ .form-control{
+   background-color: #f5f5ff !important;
+ }

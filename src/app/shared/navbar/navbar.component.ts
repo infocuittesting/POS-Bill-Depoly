@@ -39,21 +39,42 @@ public ac:any;uc :any;pc:any;
         this.router.events.subscribe((event) => {
           this.sidebarClose();
        })
-       this.Table_Status();
+       let body = {
+        "branch_id": this.business_id
+    }
+       this.commonservice.Gettable(body)
+       .subscribe((Response: any) => {
+           if(Response.ReturnCode=="RRS"){
+               this.ac=Response.Available_count;
+               this.uc=Response.unavailable_count;
+               this.pc=Response.payment_count;
+           }
+       });
+
        this.timeinterval=setInterval(() => {
         this.Table_Status(); 
       }, 30000); 
       }
      
       Table_Status(){
-        let body={
-            "branch_id":this.business_id
+        let body = {
+            "branch_id": this.business_id
         }
-        this.commonservice.Table_Status(body).subscribe((Response:any)=>{
-            this.ac=Response.Available_count;
-            this.uc=Response.unavailable_count;
-            this.pc=Response.payment_count;
-        });
+                
+        this.commonservice.Gettablestatus(body)
+            .subscribe((resp: any) => {
+                console.log("tablestatus", resp) 
+             if(resp.Changes_Flage=="1"){                
+                this.commonservice.Gettable(body)
+                .subscribe((Response: any) => {
+                    if(Response.ReturnCode=="RRS"){
+                        this.ac=Response.Available_count;
+                        this.uc=Response.unavailable_count;
+                        this.pc=Response.payment_count;
+                    }
+                });
+             }   
+            });
     }
     getTitle(){
         var titlee = window.location.pathname;
