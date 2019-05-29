@@ -53,7 +53,7 @@ public ac:any;uc :any;pc:any;
 
        this.timeinterval=setInterval(() => {
         this.Table_Status(); 
-      }, 30000); 
+      }, 3000); 
       }
      
       Table_Status(){

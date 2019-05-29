@@ -278,9 +278,10 @@ test(){
           "today_special_id":param6,
           "offer_value":param1.offer,
           "branch_name":"adayar",
-          "category":param3
+          "category":param3,
+          "branch_id":this.business_id
         }
-        console.log("gf", body)
+        console.log("gf",JSON.stringify(body))
         this.user.Update_food(body).subscribe((Response: any) => {
           if (Response.ReturnCode == "RUS") {
             this.showSuccess("The Iteam and Category is Updated successfully")

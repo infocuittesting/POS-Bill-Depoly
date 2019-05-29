@@ -130,12 +130,12 @@ export class DashboardComponent implements OnInit {
             "total_offers": param.total_offers,
             "branch_id": this.business_id
         }
-        console.log("testinput", body)
+        console.log("testinput",JSON.stringify(body))
         this.commonservice.billclose(body)
             .subscribe((resp: any) => {
                 console.log("tesssss", resp)
                 if (resp.ReturnCode == "RUS") {
-                    this.showhide=true;
+                    this.showhide = true;
                     this.showSuccess("The Bill for Table Number " + param.table_no);
                     this.getcard();
                 }
