@@ -38,6 +38,7 @@ export class SignInComponent implements OnInit{
         this.session.store("logoimages",Response.branch_details[0].restaurant_logo)
         this.session.store("password",Response.branch_details[0].branch_password)
         this.session.store("mobile",parseInt(param1))
+        this.session.store("address",Response.branch_details[0].address)
         this.router.navigate(['menus']);
       }
     });

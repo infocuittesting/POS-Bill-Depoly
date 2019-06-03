@@ -34,9 +34,15 @@ export class DashboardComponent implements OnInit {
     public showhide2: boolean = false;
     public timeinterval: any;
     public pic :any;
+    public hotelname:any;
+    public address:any;
+    public logo:any;
     ngOnInit() {
         this.business_id = this.session.retrieve("branch_id");
         this.pic=this.session.retrieve("logoimages");
+        this.hotelname=this.session.retrieve("restaurant_name");
+        this.address=this.session.retrieve("address");
+        this.logo=this.session.retrieve("logoimages");
         let body = {
             "branch_id": this.business_id
         }
@@ -99,9 +105,22 @@ export class DashboardComponent implements OnInit {
                 this.getoccvaluetableno=param.table_no;
             });
         this.occupied = setInterval(() => {
-            this.getcard();
+            this.looptableoccupied(param);
         }, 5000);
     }
+
+    looptableoccupied(param){
+        this.showhide = false;
+        this.showhide1 = false;
+        this.showhide2 = true;
+        this.commonservice.occupiedbill(param)
+            .subscribe((resp: any) => {
+                console.log("testtttttt occbill", resp)
+                this.getoccvalue = resp.Returnvalue;
+                this.getoccvaluetableno=param.table_no;
+            });
+    }
+
     closeoccupied() {
         this.showhide = true;
         this.showSuccess("The Order Status is viewed")

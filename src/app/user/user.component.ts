@@ -310,7 +310,8 @@ public enable:any=[];
      "food_type_id":param.food_type_id,
      "branch_name":"adayar",
      "offer_value":param.offer_value,
-     "category":param.category
+     "category":param.category,
+     "branch_id":this.business_id
    }
    this.user.Update_food(body).subscribe((Response:any)=>{
      if(Response.ReturnCode=="RUS"){
@@ -332,7 +333,8 @@ public enable:any=[];
      "food_type_id":param.food_type_id,
      "branch_name":"adayar",
      "offer_value":param.offer_value,
-     "category":param.category
+     "category":param.category,
+     "branch_id":this.business_id
    }
    this.user.Update_food(body).subscribe((Response:any)=>{
      if(Response.ReturnCode=="RUS"){

@@ -102,7 +102,7 @@
             </div>
         </div>
 
-        <div class="col-lg-4 " >
+        <div class="col-lg-4 ">
             <div class="row">
                 <div class="">
                     <div class="card" *ngIf="showhide1==true">
@@ -110,16 +110,25 @@
                          
                         </div> -->
                         <div class="content">
-                            <div class="printclass" >
-                                    <h4 class="title" style="color:red;text-align: center"> TABLE NO : {{tablevalue.table_no}}
+                            <div class="printclass">
+                                <div>
+                                        <h4 class="title" style="color:red;text-align: Center;z-index: 4;"> <img src="{{logo}}" style="width:50px;height:50px;border-radius:25px;">
+                                                {{hotelname|uppercase}}
                                         </h4>
-                                        <hr/>
-                                <div class="table-responsive ">
+                                        <p class="title" style="color:red;text-align: Center;font-size: 14px;z-index: 4;"> 
+                                                {{address|uppercase}}
+                                        </p>
+                                    <p class="title" style="color:red;text-align: left;font-size: 12px;"> TABLE NO :
+                                        {{tablevalue.table_no}}
+                                    </p>
+                                </div>
+                                <hr/>
+                                <div class="table-responsive">
                                     <table class="table table-striped tableBodyScroll" style="width:100%">
                                         <thead>
                                             <tr style="color:red">
                                                 <th align="left" style="width:50%">Items&nbsp;list</th>
-                                                <th align="left" style="width:25%" >QTY</th>
+                                                <th align="left" style="width:25%">QTY</th>
                                                 <th align="left" style="width:25%">Price</th>
                                             </tr>
 
@@ -127,38 +136,44 @@
                                         <tbody>
                                             <tr *ngFor="let item of billtable">
                                                 <td style="margin-left:0px;width:50%">{{item.food_name}}</td>
-                                                <td  style="width:25%;"  ><i class="fa fa-times"></i>{{item.quantity}}</td>
-                                                <td  style="width:25%"><i class="fa fa-inr"></i> {{item.total_price}}</td>
+                                                <td style="width:25%;"><i class="fa fa-times"></i>{{item.quantity}}</td>
+                                                <td style="width:25%"><i class="fa fa-inr"></i> {{item.total_price}}
+                                                </td>
                                             </tr>
                                             <tr border=1>
                                                 <td colspan="2" style="color:red;"> Total Amount (of Item)
-                                                    :
                                                 </td>
                                                 <td style="color:red;"><i class="fa fa-inr"></i>
                                                     {{tablevalue.sub_total}}</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2" style="color:red;"> Total CGST (2.80%) :
+                                                <td colspan="2" style="color:red;"> Total CGST (2.80%)
                                                 </td>
                                                 <td style="color:red;"><i class="fa fa-inr"></i>
                                                     {{tablevalue.CGST_Amount}}</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2" style="color:red;"> Total SGST (6%) :
+                                                <td colspan="2" style="color:red;"> Total SGST (2.80%)
                                                 </td>
                                                 <td style="color:red;"><i class="fa fa-inr"></i>
                                                     {{tablevalue.CGST_Amount}}</td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>         
-                                <hr />
+                                </div>
+                                <hr/>
                                 <div class="row">
                                     <a style="color:red;"> Total Price :</a>
-                                    <p style="color:red; float:right;margin-right: 40px"><i class="fa fa-inr"></i>
-                                        {{tablevalue.grand_total}}</p>
-
+                                    <span style="color:red; float:right;margin-right: 60px"><i class="fa fa-inr"></i>
+                                        {{tablevalue.grand_total}}</span>
+                                  <hr/>      
                                 </div>
+                                <p class="title" style="color:red;text-align: Center;font-size: 14px;"> 
+                                    Thank you! Visit again!
+                                </p>
+                                <p class="title" style="color:red;text-align: center;font-size: 14px;"> 
+                                        Technology Partner www.infocuittecnologies.com
+                                    </p>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
@@ -200,7 +215,7 @@
                                                 Not Served</td>
                                         </tr>
                                         <tr *ngIf="getoccvalue == 0">
-                                          <td> No Data Found</td>
+                                            <td> No Data Found</td>
                                         </tr>
                                     </tbody>
                                 </table>
