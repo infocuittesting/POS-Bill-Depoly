@@ -89,7 +89,13 @@ login(insert){
   return this.http.post("https://tos-production.herokuapp.com/Billing_KOT_Login",insert,options)
   .map(this.extractData)
 }
-
+  //Tablelogout
+  closetablet(param) {
+    const headers = new Headers({ 'Content-Type': 'application/json' })
+    const options = new RequestOptions({ headers: headers });
+  return this.http.post('https://tos-production.herokuapp.com/Tablet_Login_And_Logout',param,options)
+    .map(this.extractData)
+}
   private extractData(res: Response) {
     let body = res.json();
     return body;

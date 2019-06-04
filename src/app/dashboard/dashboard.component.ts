@@ -33,24 +33,24 @@ export class DashboardComponent implements OnInit {
     public showhide1: boolean = false;
     public showhide2: boolean = false;
     public timeinterval: any;
-    public pic :any;
-    public hotelname:any;
-    public address:any;
-    public logo:any;
+    public pic: any;
+    public hotelname: any;
+    public address: any;
+    public logo: any;
     ngOnInit() {
         this.business_id = this.session.retrieve("branch_id");
-        this.pic=this.session.retrieve("logoimages");
-        this.hotelname=this.session.retrieve("restaurant_name");
-        this.address=this.session.retrieve("address");
-        this.logo=this.session.retrieve("logoimages");
+        this.pic = this.session.retrieve("logoimages");
+        this.hotelname = this.session.retrieve("restaurant_name");
+        this.address = this.session.retrieve("address");
+        this.logo = this.session.retrieve("logoimages");
         let body = {
             "branch_id": this.business_id
         }
         this.commonservice.Gettable(body)
-        .subscribe((resp1: any) => {
+            .subscribe((resp1: any) => {
                 this.tablelist = resp1.Returnvalue;
-                console.log("testttttt", resp1)             
-        });
+                console.log("testttttt", resp1)
+            });
         this.timeinterval = setInterval(() => {
             this.getcard();
         }, 5000);
@@ -60,23 +60,23 @@ export class DashboardComponent implements OnInit {
         let body = {
             "branch_id": this.business_id
         }
-                
+
         this.commonservice.Gettablestatus(body)
             .subscribe((resp: any) => {
-                console.log("tablestatus", resp) 
-             if(resp.Changes_Flage=="1"){                
-                this.commonservice.Gettable(body)
-                .subscribe((resp1: any) => {
-                    if(resp1.ReturnCode=="RRS"){
-                        this.tablelist = resp1.Returnvalue;
-                        console.log("testttttt", resp1) 
-                        this.commonservice.Gettableupdate(body)
-                        .subscribe((resp2: any) => {
-                        resp;                          
+                console.log("tablestatus", resp)
+                if (resp.Changes_Flage == "1") {
+                    this.commonservice.Gettable(body)
+                        .subscribe((resp1: any) => {
+                            if (resp1.ReturnCode == "RRS") {
+                                this.tablelist = resp1.Returnvalue;
+                                console.log("testttttt", resp1)
+                                this.commonservice.Gettableupdate(body)
+                                    .subscribe((resp2: any) => {
+                                        resp;
+                                    });
+                            }
                         });
-                    }
-                });
-             }   
+                }
             });
     }
     getbill(param) {
@@ -93,7 +93,7 @@ export class DashboardComponent implements OnInit {
 
     public getoccvalue: any;
     public occupied: any;
-    public getoccvaluetableno:any;
+    public getoccvaluetableno: any;
     getoccupied(param) {
         this.showhide = false;
         this.showhide1 = false;
@@ -102,14 +102,14 @@ export class DashboardComponent implements OnInit {
             .subscribe((resp: any) => {
                 console.log("testtttttt occbill", resp)
                 this.getoccvalue = resp.Returnvalue;
-                this.getoccvaluetableno=param.table_no;
+                this.getoccvaluetableno = param.table_no;
             });
         this.occupied = setInterval(() => {
             this.looptableoccupied(param);
         }, 5000);
     }
 
-    looptableoccupied(param){
+    looptableoccupied(param) {
         this.showhide = false;
         this.showhide1 = false;
         this.showhide2 = true;
@@ -117,7 +117,7 @@ export class DashboardComponent implements OnInit {
             .subscribe((resp: any) => {
                 console.log("testtttttt occbill", resp)
                 this.getoccvalue = resp.Returnvalue;
-                this.getoccvaluetableno=param.table_no;
+                this.getoccvaluetableno = param.table_no;
             });
     }
 
@@ -127,7 +127,7 @@ export class DashboardComponent implements OnInit {
         clearInterval(this.occupied);
     }
 
-    printbill(cmpName){
+    printbill(cmpName) {
         let printContents = document.getElementsByClassName(cmpName)[0].innerHTML;
         var printWin = window.open();
         printWin.document.write(printContents);
@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit {
         printWin.print();
         printWin.close();
     }
-    closebill(param) { 
+    closebill(param) {
         let body = {
             "table_no": param.table_no,
             "order_no": param.order_no,
@@ -149,14 +149,24 @@ export class DashboardComponent implements OnInit {
             "total_offers": param.total_offers,
             "branch_id": this.business_id
         }
-        console.log("testinput",JSON.stringify(body))
+        console.log("testinput", JSON.stringify(body))
         this.commonservice.billclose(body)
             .subscribe((resp: any) => {
                 console.log("tesssss", resp)
                 if (resp.ReturnCode == "RUS") {
                     this.showhide = true;
                     this.showSuccess("The Bill for Table Number " + param.table_no);
-                    this.getcard();
+                    let body1 = {
+                        "table_no": param.table_no,
+                        "branch_id": this.business_id,
+                        "password":"",
+                        "login_status_id": 2
+                    }
+                    this.commonservice.closetablet(body1).subscribe((resp: any) => {
+                        if(resp.ReturnCode=="LOS"){
+                            this.getcard();                        
+                        }
+                    });
                 }
             });
 
